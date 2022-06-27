@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class run {
 
     public static void main(String[] args) {
+
         // list Category
         ArrayList<Category> listCategory = new ArrayList<>();
         listCategory.add(new Category(1, "Comuter"));
@@ -114,7 +115,6 @@ public class run {
                 }
             }
         } while (true);
-
     }
 
     // 4
