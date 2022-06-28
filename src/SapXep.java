@@ -1,42 +1,35 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SapXep {
     public static void main(String[] args) {
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(3);
-        arrayList.add(1);
-        arrayList.add(4);
-        arrayList.add(2);
-        arrayList.add(5);
+
+        int[] arr = {3, 1, 2, 5, 4};
         System.out.println("Trước khi sắp xếp");
-        for (int i = 0; i < arrayList.size(); i++){
-            System.out.println(arrayList.get(i));
+        for (int i = 0; i < arr.length; i++){
+            System.out.println(arr[i]);
         }
         System.out.println("Sau khi sắp xếp");
-        //BubbleSort(arrayList);
-        //insertionSort(arrayList);
-        SelectionSort(arrayList);
-        for (int i = 0; i < arrayList.size(); i++){
-            System.out.println(arrayList.get(i));
+        //BubbleSort(arr);
+        //insertionSort(arr);
+        SelectionSort(arr);
+        for (int i = 0; i < arr.length; i++){
+            System.out.println(arr[i]);
         }
     }
 
-    // Hoán vị
-    public static void HoanVi(int a, int b){
-        int tg = a;
-        a = b;
-        b = tg;
-    }
-
-    // Sắp xếp nổi bọt
-    public static void BubbleSort(ArrayList<Integer> list){
-        for (int i = 0; i < list.size() -1 ; i++){
+    // BubbleSort
+    public static void BubbleSort(int arr[]){
+        for (int i = 0; i < arr.length -1 ; i++){
             boolean kt = false;
-            for (int j = 0; j < list.size() - 1; j++){
-                //so sánh các phần tử cạnh nhau
-                if (list.get(j) > list.get(j+1)){
-                    // tráo đổi chúng
-                    HoanVi(list.get(j), list.get(j+1));
+            for (int j = 0; j < arr.length - i - 1; j++){
+                //compare
+                if (arr[j] > arr[j+1]){
+                    // convert
+                    int tg = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = tg;
+
                     kt = true;
                 }
             }
@@ -50,40 +43,42 @@ public class SapXep {
         }
     }
 
-    // Sắp xếp chèn
-    /*public static void insertionSort(ArrayList<Integer> list){
+    // insertionSort
+    public static void insertionSort(int arr[]){
 
         int holePosition;
         int valueToInsert;
 
-        for(int i = 1; i < list.size(); i++){
-        //chọn một giá trị để chèn
-            valueToInsert = list.get(i);
+        for(int i = 1; i < arr.length; i++){
+        // select
+            valueToInsert = arr[i];
             holePosition = i;
-            //xác định vị trí cho phần tử được chèn
-            while (holePosition > 0 && list.get(holePosition-1) > valueToInsert){
-                list.get(holePosition) = list.get(holePosition - 1);
+            // locate
+            while (holePosition > 0 && arr[holePosition-1]> valueToInsert){
+                arr[holePosition] = arr[holePosition-1];
                 holePosition = holePosition -1 ;
             }
-            //chèn giá trị tại vị trí trên
-            list.get(holePosition) = valueToInsert;
+            // insert
+            arr[holePosition] = valueToInsert;
         }
-    }*/
+    }
 
-    // Sắp xếp chọn
-    public static void SelectionSort(ArrayList<Integer> list){
-        for (int i = 1; i < list.size() -1 ; i++){
-            //thiết lập phần tử hiện tại là min
+    // SelectionSort
+    public static void SelectionSort(int arr[]){
+        for (int i = 0; i < arr.length -1 ; i++){
+            // min
             int min = i;
-            //kiểm tra phần tử có là nhỏ nhất không
-            for (int j = i+1; j < list.size(); j++){
-                if(list.get(j) < list.get(min)){
+            // check min
+            for (int j = i+1; j < arr.length; j++){
+                if(arr[j] < arr[min]){
                     min = j;
                 }
             }
-            //tráo đổi phần tử nhỏ nhất với phần tử hiện tạ
+            // convert
             if (min != i){
-                HoanVi(list.get(min), list.get(i));
+                int tg = arr[min];
+                arr[min] = arr[i];
+                arr[i] = tg;
             }
         }
     }

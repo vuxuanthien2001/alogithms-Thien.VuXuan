@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class run {
@@ -49,8 +50,13 @@ public class run {
                     // 5. Hãy viết function findProductByCategory(listProduct, categoryId)
                     // trả về danh sách product có categoryId = categoryId truyền vào
                     ArrayList<Product> listcategoryId = new ArrayList<>();
-                    System.out.print("Nhập Id loại sản phẩm cần tìm: ");
+                    //System.out.print("Nhập Id loại sản phẩm cần tìm: ");
+                    Random random = new Random();
                     int categoryIdProduct = 0;
+                    do {
+                        categoryIdProduct = random.nextInt(10);
+                    }while (!(categoryIdProduct >= 0));
+                    /*int categoryIdProduct = 0;
                     do {
                         try {
                             categoryIdProduct = Integer.parseInt(scanner.next());
@@ -59,7 +65,7 @@ public class run {
                         }
                         if (categoryIdProduct < 0)
                             System.out.print("\t\tChọn lại: ");
-                    } while (!(categoryIdProduct >= 0));
+                    } while (!(categoryIdProduct >= 0));*/
                     if (findProductByCategory(listProduct, categoryIdProduct).size() == 0) {
                         System.out.println("Không có sản phẩm nào có Id trên");
                     } else {
@@ -130,24 +136,26 @@ public class run {
 
     // 5
     public static ArrayList<Product> findProductByCategory(ArrayList<Product> list, int categoryId) {
-        ArrayList<Product> arrayList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getCategoryId() == categoryId) {
-                arrayList.add(new Product(list.get(i).getName(), list.get(i).getPrice(), list.get(i).getQuality(), list.get(i).getCategoryId()));
+        ArrayList<Product> listProduct = new ArrayList<>();
+        for (Product product: list
+             ) {
+            if (product.getCategoryId() == categoryId) {
+                listProduct.add(product);
             }
         }
-        return arrayList;
+
+        return listProduct;
     }
 
     // 6
     public static ArrayList<String> findProductByPrice(ArrayList<Product> list, double price) {
-        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<String> listName = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getPrice() <= price) {
-                arrayList.add(list.get(i).getName());
+                listName.add(list.get(i).getName());
             }
         }
-        return arrayList;
+        return listName;
     }
 
     public static int Chon() {
