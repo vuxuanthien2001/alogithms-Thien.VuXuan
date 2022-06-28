@@ -1,3 +1,5 @@
+import com.sun.security.jgss.GSSUtil;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -27,7 +29,20 @@ public class run {
 
         Scanner scanner = new Scanner(System.in);
 
-        do {
+        System.out.println("Trước khi sắp xếp");
+        for (Product product: listProduct
+             ) {
+            System.out.println(product.getName()+"\t"+product.getPrice()+"\t"+product.getQuality()+"\t"+product.getCategoryId());
+        }
+        System.out.println("Sau khi sắp xếp");
+        //sortByPrice(listProduct);
+        sortByName(listProduct);
+        for (Product product: listProduct
+        ) {
+            System.out.println(product.getName()+"\t"+product.getPrice()+"\t"+product.getQuality()+"\t"+product.getCategoryId());
+        }
+
+        /*do {
             switch (Chon()) {
                 case 1: {
                     // 4. Hãy viết function findProduct(listProduct, nameProduct)
@@ -56,7 +71,7 @@ public class run {
                     do {
                         categoryIdProduct = random.nextInt(10);
                     }while (!(categoryIdProduct >= 0));
-                    /*int categoryIdProduct = 0;
+                    *//*int categoryIdProduct = 0;
                     do {
                         try {
                             categoryIdProduct = Integer.parseInt(scanner.next());
@@ -65,7 +80,7 @@ public class run {
                         }
                         if (categoryIdProduct < 0)
                             System.out.print("\t\tChọn lại: ");
-                    } while (!(categoryIdProduct >= 0));*/
+                    } while (!(categoryIdProduct >= 0));*//*
                     if (findProductByCategory(listProduct, categoryIdProduct).size() == 0) {
                         System.out.println("Không có sản phẩm nào có Id trên");
                     } else {
@@ -120,7 +135,7 @@ public class run {
                     break;
                 }
             }
-        } while (true);
+        } while (true);*/
     }
 
     // 4
@@ -157,6 +172,49 @@ public class run {
         }
         return listName;
     }
+
+
+    // 11. "Hãy viết function sortByPrice(listProduct)
+    //  trả về danh sách product sắp xếp theo giá từ thấp đến cao. Làm theo thuật toán buble."
+    public static void sortByPrice(ArrayList<Product> list){
+        for (int i =0; i < list.size() - 1; i++){
+            boolean kt = false;
+            for (int j = 0; j < list.size() - i -1 ; j++){
+                if(list.get(j).getPrice() > list.get(j+1).getPrice()){
+                    Product tg = list.get(j);
+                    list.set(j,list.get(j+1));
+                    list.set(j+1,tg);
+                }
+            }
+        }
+    }
+
+    // 12. "Hãy viết function sortByName(listProduct)
+    //trả về danh sách product sắp xếp độ dài của tên từ cao đến thấp.
+    //Làm theo thuật toán insertion."
+    public static void sortByName(ArrayList<Product> list){
+        int holePosition;
+        Product valueToInsert;
+
+        for(int i = 1; i < list.size(); i++){
+            valueToInsert = list.get(i);
+            holePosition = i;
+            while (holePosition > 0 && list.get(holePosition-1).getName().length() > valueToInsert.getName().length()){
+                list.set(holePosition, list.get(holePosition-1));
+                holePosition = holePosition -1 ;
+            }
+            list.set(holePosition, valueToInsert);
+        }
+    }
+
+    // 13. "Hãy viết function sortByCategoryName(listProduct, listCategory)
+    //trả về danh sách product sắp xếp theo category name theo thứ tự abc. .
+    //Làm theo thuật toán của bài 12."
+    public static void sortByCategoryName(ArrayList<Product> listProduct, ArrayList<Category> listCategory){
+
+    }
+
+
 
     public static int Chon() {
         Scanner sc = new Scanner(System.in);
