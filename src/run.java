@@ -5,7 +5,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class run {
-
+    static Queue queue = new Queue();
+    static Stack stack = new Stack(5);
     public static void main(String[] args) {
 
         // list Category
@@ -29,18 +30,28 @@ public class run {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Trước khi sắp xếp");
-        for (Product product: listProduct
-             ) {
-            System.out.println(product.getName()+"\t"+product.getPrice()+"\t"+product.getQuality()+"\t"+product.getCategoryId());
-        }
-        System.out.println("Sau khi sắp xếp");
-        //sortByPrice(listProduct);
-        sortByName(listProduct);
-        for (Product product: listProduct
+        //queue.getQueue();
+        stack.getStack();
+
+        /*System.out.println("Trước khi sắp xếp");
+        for (Product product : listProduct
         ) {
-            System.out.println(product.getName()+"\t"+product.getPrice()+"\t"+product.getQuality()+"\t"+product.getCategoryId());
+            System.out.println(product.getName() + "\t" + product.getPrice() + "\t" + product.getQuality() + "\t" + product.getCategoryId());
         }
+        System.out.println("Sau khi sắp xếp");*/
+        //ArrayList<Product> list = sortByPrice(listProduct);
+        //ArrayList<Product> list = sortByName(listProduct);
+        //ArrayList<Product> list = sortByCategoryName(listProduct, listCategory);
+        /*ArrayList<Product> list = mapProductByCategory(listProduct, listCategory);
+        for (Product product : list
+        ) {
+            //System.out.println(product.getName() + "\t" + product.getPrice() + "\t" + product.getQuality() + "\t" + product.getCategoryId() );
+            System.out.println(product.getName() + "\t" + product.getPrice() + "\t" + product.getQuality() + "\t" + product.getCategoryId() + "\t" + product.getCategoryName());
+        }*/
+
+        //Product product = minByPrice(listProduct);
+        //Product product = maxByPrice(listProduct);
+        //System.out.println(product.getName());
 
         /*do {
             switch (Chon()) {
@@ -152,8 +163,8 @@ public class run {
     // 5
     public static ArrayList<Product> findProductByCategory(ArrayList<Product> list, int categoryId) {
         ArrayList<Product> listProduct = new ArrayList<>();
-        for (Product product: list
-             ) {
+        for (Product product : list
+        ) {
             if (product.getCategoryId() == categoryId) {
                 listProduct.add(product);
             }
@@ -176,43 +187,136 @@ public class run {
 
     // 11. "Hãy viết function sortByPrice(listProduct)
     //  trả về danh sách product sắp xếp theo giá từ thấp đến cao. Làm theo thuật toán buble."
-    public static void sortByPrice(ArrayList<Product> list){
-        for (int i =0; i < list.size() - 1; i++){
+    public static ArrayList<Product> sortByPrice(ArrayList<Product> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
             boolean kt = false;
-            for (int j = 0; j < list.size() - i -1 ; j++){
-                if(list.get(j).getPrice() > list.get(j+1).getPrice()){
+            for (int j = 0; j < list.size() - i - 1; j++) {
+                if (list.get(j).getPrice() > list.get(j + 1).getPrice()) {
                     Product tg = list.get(j);
-                    list.set(j,list.get(j+1));
-                    list.set(j+1,tg);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, tg);
+                    kt = true;
                 }
             }
+            if (kt == false) {
+                break;
+            }
         }
+        return list;
     }
 
     // 12. "Hãy viết function sortByName(listProduct)
     //trả về danh sách product sắp xếp độ dài của tên từ cao đến thấp.
     //Làm theo thuật toán insertion."
-    public static void sortByName(ArrayList<Product> list){
+    public static ArrayList<Product> sortByName(ArrayList<Product> list) {
         int holePosition;
         Product valueToInsert;
 
-        for(int i = 1; i < list.size(); i++){
+        for (int i = 1; i < list.size(); i++) {
             valueToInsert = list.get(i);
             holePosition = i;
-            while (holePosition > 0 && list.get(holePosition-1).getName().length() > valueToInsert.getName().length()){
-                list.set(holePosition, list.get(holePosition-1));
-                holePosition = holePosition -1 ;
+            while (holePosition > 0 && list.get(holePosition - 1).getName().length() > valueToInsert.getName().length()) {
+                list.set(holePosition, list.get(holePosition - 1));
+                holePosition = holePosition - 1;
             }
             list.set(holePosition, valueToInsert);
         }
+
+        return list;
     }
 
     // 13. "Hãy viết function sortByCategoryName(listProduct, listCategory)
     //trả về danh sách product sắp xếp theo category name theo thứ tự abc. .
     //Làm theo thuật toán của bài 12."
-    public static void sortByCategoryName(ArrayList<Product> listProduct, ArrayList<Category> listCategory){
+
+    public static String getNameCategory(ArrayList<Category> list, int id) {
+        for (Category category: list
+             ) {
+            if(category.getId() == id){
+                return category.getName();
+            }
+        }
+        return "";
+    }
+
+    public static ArrayList<Product> sortByCategoryName(ArrayList<Product> listProduct, ArrayList<Category> listCategory) {
+        int holePosition;
+        Product valueToInsert;
+
+        for (int i = 1; i < listProduct.size(); i++) {
+            valueToInsert = listProduct.get(i);
+            holePosition = i;
+            while (holePosition > 0 && getNameCategory(listCategory, listProduct.get(holePosition - 1).getCategoryId()).compareTo(getNameCategory(listCategory, valueToInsert.getCategoryId())) > 0) {
+                listProduct.set(holePosition, listProduct.get(holePosition - 1));
+                holePosition = holePosition - 1;
+            }
+            listProduct.set(holePosition, valueToInsert);
+
+
+        }
+        return listProduct;
+
 
     }
+
+    // 14. "Hãy viết function mapProductByCategory(listProduct, listCategory)
+    //trả về danh sách product có chứa tên category tương ứng theo categoryId"
+    public static ArrayList<Product> mapProductByCategory(ArrayList<Product> listProduct, ArrayList<Category> listCategory) {
+        for (Product product: listProduct
+             ) {
+            for (Category category: listCategory
+                 ) {
+                if (product.getCategoryId() == category.getId()){
+                    product.setCategoryName(category.getName());
+                }
+            }
+        }
+        return listProduct;
+    }
+
+
+    // 15. "Hãy viết function minByPrice(listProduct)
+    //trả về  product có giá nhỏ nhất"
+    public static Product minByPrice(ArrayList<Product> list) {
+        double min = list.get(0).getPrice();
+        for (Product product : list
+        ) {
+            if (min > product.getPrice()) {
+                min = product.getPrice();
+
+            }
+        }
+        for (Product product : list
+        ) {
+            if (product.getPrice() == min) {
+                return product;
+            }
+        }
+        return null;
+
+    }
+
+    // 16. "Hãy viết function maxByPrice(listProduct)
+    //trả về  product có giá lớn nhất"
+    public static Product maxByPrice(ArrayList<Product> list) {
+        double max = list.get(0).getPrice();
+        for (Product product : list
+        ) {
+            if (max < product.getPrice()) {
+                max = product.getPrice();
+
+            }
+        }
+        for (Product product : list
+        ) {
+            if (product.getPrice() == max) {
+                return product;
+            }
+        }
+        return null;
+
+    }
+
 
 
 

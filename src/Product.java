@@ -4,6 +4,8 @@ public class Product {
     private double price, quality;
     private int categoryId;
 
+    private String categoryName;
+
     public Product(){}
 
     public Product(String name, double price, double quality, int categoryId) {
@@ -11,6 +13,22 @@ public class Product {
         this.price = price;
         this.quality = quality;
         this.categoryId = categoryId;
+    }
+
+    public Product(String name, double price, double quality, int categoryId, String categoryName) {
+        this.name = name;
+        this.price = price;
+        this.quality = quality;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getName() {
